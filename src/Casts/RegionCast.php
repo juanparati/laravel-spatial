@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace TarfinLabs\LaravelSpatial\Casts;
 
-use InvalidArgumentException;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
+use TarfinLabs\LaravelSpatial\Casts\Contracts\RegionCastContract;
 use TarfinLabs\LaravelSpatial\Types\Point;
 use TarfinLabs\LaravelSpatial\Types\Polygon;
 
-class RegionCast implements CastsAttributes, SerializesCastableAttributes
+class RegionCast implements RegionCastContract
 {
     public function get($model, string $key, $value, array $attributes): ?Polygon
     {

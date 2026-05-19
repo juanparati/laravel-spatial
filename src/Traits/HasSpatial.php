@@ -7,8 +7,8 @@ namespace TarfinLabs\LaravelSpatial\Traits;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use TarfinLabs\LaravelSpatial\Casts\RegionCast;
-use TarfinLabs\LaravelSpatial\Casts\LocationCast;
+use TarfinLabs\LaravelSpatial\Casts\Contracts\LocationCastContract;
+use TarfinLabs\LaravelSpatial\Casts\Contracts\RegionCastContract;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
 trait HasSpatial
@@ -67,12 +67,12 @@ trait HasSpatial
 
     public function getLocationCastedAttributes(): Collection
     {
-        return collect($this->getCasts())->filter(fn ($cast) => $cast === LocationCast::class)->keys();
+        return collect($this->getCasts())->filter(fn ($cast) => is_subclass_of($cast, LocationCastContract::class))->keys();
     }
 
     public function getRegionCastedAttributes(): Collection
     {
-        return collect($this->getCasts())->filter(fn ($cast) => $cast === RegionCast::class)->keys();
+        return collect($this->getCasts())->filter(fn ($cast) => is_subclass_of($cast, RegionCastContract::class))->keys();
     }
 
     private function selectDistanceToMysqlAndPostgres(Builder $query, string $column, Point $point): Builder

@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace TarfinLabs\LaravelSpatial\Casts;
 
-use InvalidArgumentException;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
+use TarfinLabs\LaravelSpatial\Casts\Contracts\LocationCastContract;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
-class LocationCast implements CastsAttributes, SerializesCastableAttributes
+class LocationCast implements LocationCastContract
 {
     public function get($model, string $key, $value, array $attributes): ?Point
     {
